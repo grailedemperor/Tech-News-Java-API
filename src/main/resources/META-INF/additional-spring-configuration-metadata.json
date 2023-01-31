@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "spring.session.timeout.seconds",
+      "type": "java.lang.String",
+      "description": "Description for spring.session.timeout.seconds."
+    },
+    {
+      "name": "spring.session.store-type",
+      "type": "java.lang.String",
+      "description": "Description for spring.session.store-type."
+    }
+  ] }
