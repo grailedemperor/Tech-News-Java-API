@@ -20,7 +20,7 @@ public class UserController {
     VoteRepository voteRepository;
 
     // GET Method that returns all users and adds up post count
-    @GetMapping("/users")
+    @GetMapping("api/users")
     public List<User> getAllUsers() {
         List<User> userList = repository.findAll();
         for (User u : userList) {
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     // GET Method that returns single user and adds up post count
-    @GetMapping("/user/{id}")
+    @GetMapping("api/user/{id}")
     public User getUserById(@PathVariable Integer id) {
         User returnUser = repository.getReferenceById(id);
         List<Post> postList = returnUser.getPosts();
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     // POST Method that adds user and hashes password
-    @PostMapping("/users")
+    @PostMapping("api/users")
     public User addUser(@RequestBody User user) {
         // Encrypt password
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
@@ -58,7 +58,7 @@ public class UserController {
     // user id and save the user
     // I'm assuming since the id is the same, the other data is just overwritten in
     // the db?
-    @PutMapping("/users/{id}")
+    @PutMapping("api/users/{id}")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         User tempUser = repository.getReferenceById(id);
         if (!tempUser.equals(null)) {
@@ -69,7 +69,7 @@ public class UserController {
     }
 
     // DELETE Method that deletes user by ID
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("api/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable int id) {
         repository.deleteById(id);
