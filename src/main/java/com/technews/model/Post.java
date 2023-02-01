@@ -1,8 +1,8 @@
 package com.technews.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,26 +11,31 @@ import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "post")
+@Table(name="posts")
 public class Post implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     private String title;
     private String postUrl;
+
     @Transient
     private String userName;
+
     @Transient
     private int voteCount;
+
     private Integer userId;
+
     @NotNull
     @Temporal(TemporalType.DATE)
-    @Column(name = "posted_at")
+    @Column(name="posted_at")
     private Date postedAt = new Date();
 
     @NotNull
     @Temporal(TemporalType.DATE)
-    @Column(name = "updated_at")
+    @Column(name="updated_at")
     private Date updatedAt = new Date();
 
     @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -119,24 +124,17 @@ public class Post implements Serializable {
         this.comments = comments;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return getVoteCount() == post.getVoteCount() &&
-                Objects.equals(getId(), post.getId()) &&
-                Objects.equals(getTitle(), post.getTitle()) &&
-                Objects.equals(getPostUrl(), post.getPostUrl()) &&
-                Objects.equals(getUserName(), post.getUserName()) &&
-                Objects.equals(getUserId(), post.getUserId()) && getPostedAt().equals(post.getPostedAt()) && getUpdatedAt().equals(post.getUpdatedAt()) &&
-                Objects.equals(getComments(), post.getComments());
+        return voteCount == post.voteCount && Objects.equals(id, post.id) && Objects.equals(title, post.title) && Objects.equals(postUrl, post.postUrl) && Objects.equals(userName, post.userName) && Objects.equals(userId, post.userId) && Objects.equals(postedAt, post.postedAt) && Objects.equals(updatedAt, post.updatedAt) && Objects.equals(comments, post.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getPostUrl(), getUserName(), getVoteCount(), getUserId(), getPostedAt(), getUpdatedAt(), getComments());
+        return Objects.hash(id, title, postUrl, userName, voteCount, userId, postedAt, updatedAt, comments);
     }
 
     @Override
